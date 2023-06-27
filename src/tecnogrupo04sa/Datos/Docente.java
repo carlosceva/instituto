@@ -19,6 +19,8 @@ public class Docente {
     public int telefono;
     public String especialidad;
     
+    //balosiño gordiño
+    
     public Docente(){
     }
     
