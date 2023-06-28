@@ -18,9 +18,7 @@ public class Docente {
     public String email;
     public int telefono;
     public String especialidad;
-    
-    //balosiño gordiño
-    
+        
     public Docente(){
     }
     

@@ -141,7 +141,7 @@ public class Help {
                         + "\n"
                         + "listar_tratamiento" + "\n"
                         + "\n"
-                        + "-------------ESTADISTICAS----------------"+ "\n"
+                        + "-------------ESTADISTICAS DEL INSTITUTO----------------"+ "\n"
                         + "Porcentaje de pacientes por sexo" + "\n"
                         + "porcentaje_pacientes" + "\n"
                         + "\n"
