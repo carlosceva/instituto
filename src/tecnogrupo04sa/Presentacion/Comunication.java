@@ -40,7 +40,6 @@ public class Comunication {
     Doctor doctor;
     Especialidad especialidad;
     Servicio servicio;
-    Horario horario;
     Cita cita;
     Diagnostico diagnostico;
     Historial historial;
@@ -51,6 +50,7 @@ public class Comunication {
     
     Carrera carrera;
     Docente docente;
+    Horario horario;
     Usuario usuario;
     
     int nro = -1;
@@ -189,7 +189,7 @@ public class Comunication {
                                 carrera.eliminar();
                                 new SMTP(sCorreo, "Carrera Eliminada Correctamente", sMensaje);
                             break;
-                        case"listar_carrera":
+                        case"listar_carreras":
                                 new SMTP(sCorreo, "Listado de carreras", carrera.listar().toString());
                             break;
                         //-----------------------Docente-----------------------    
@@ -200,6 +200,7 @@ public class Comunication {
                                 docente.email=lista[2];
                                 docente.telefono = Integer.valueOf(lista[3]);
                                 docente.especialidad=lista[4];
+                                docente.estado=lista[5];
                                 docente.registrar();
                                 new SMTP(sCorreo, "Docente registrado correctamente", sMensaje);
                             break;
@@ -210,6 +211,7 @@ public class Comunication {
                                 docente.email=lista[2];
                                 docente.telefono = Integer.valueOf(lista[3]);
                                 docente.especialidad=lista[4];
+                                docente.estado=lista[5];
                                 docente.modificar();
                                 new SMTP(sCorreo, "Docente modificado correctamente", sMensaje);
                             break;
@@ -219,7 +221,7 @@ public class Comunication {
                                 docente.eliminar();
                                 new SMTP(sCorreo, "Docente Eliminado Correctamente", sMensaje);
                             break;
-                        case"listar_docente":
+                        case"listar_docentes":
                                 new SMTP(sCorreo, "Listado de docentes", docente.listar().toString());
                             break;
                         //------------------------HORARIOS-----------------------    
@@ -249,148 +251,8 @@ public class Comunication {
                                 horario.eliminar();
                                 new SMTP(sCorreo, "Horario Eliminado Correctamente", sMensaje);
                             break;
-                        case"listar_horario":
+                        case"listar_horarios":
                                 new SMTP(sCorreo, "Listado de Horarios Correctamente", horario.listar().toString());
-                            break;
-                        //-------------------------CITA-------------------------    
-                        case "registrar_cita":
-                                lista=sMensaje.split(";");
-                                cita.id_cita=Integer.valueOf(lista[0]);
-                                cita.codigo_pa=Integer.valueOf(lista[1]);
-                                cita.codigo_ser = Integer.valueOf(lista[2]);
-                                cita.codigo_hora = Integer.valueOf(lista[3]);
-                                cita.fecha_cita = lista[4];
-                                cita.registrar();
-                            new SMTP(sCorreo, "Cita registrada correctamente", sMensaje);
-                            break;
-                        case "modificar_cita":
-                                lista=sMensaje.split(";");
-                                cita.id_cita=Integer.valueOf(lista[0]);
-                                cita.codigo_pa=Integer.valueOf(lista[1]);
-                                cita.codigo_ser = Integer.valueOf(lista[2]);
-                                cita.codigo_hora = Integer.valueOf(lista[3]);
-                                cita.fecha_cita = lista[4];
-                                cita.modificar();
-                            new SMTP(sCorreo, "Cita modificada correctamente", sMensaje);
-                            break;
-                        case"eliminar_cita":
-                                lista = sMensaje.split(";");
-                                cita.id_cita = Integer.valueOf(lista[0]);
-                                cita.eliminar();
-                                new SMTP(sCorreo, "Cita Eliminada Correctamente", sMensaje);
-                            break;
-                        case"listar_cita":
-                                new SMTP(sCorreo, "Listado de Citas Correctamente", cita.listar().toString());
-                            break;
-                        //----------------------DIAGNOSTICO---------------------
-                        case "registrar_diagnostico":
-                                lista=sMensaje.split(";");
-                                diagnostico.id_diag=Integer.valueOf(lista[0]);
-                                diagnostico.codigo_cita=Integer.valueOf(lista[1]);
-                                diagnostico.codigo_doc = Integer.valueOf(lista[2]);
-                                diagnostico.detalle = lista[3];
-                                diagnostico.registrar();
-                            new SMTP(sCorreo, "Diagnostico registrado correctamente", sMensaje);
-                            break;
-                        case "modificar_diagnostico":
-                                lista=sMensaje.split(";");
-                                diagnostico.id_diag=Integer.valueOf(lista[0]);
-                                diagnostico.codigo_cita=Integer.valueOf(lista[1]);
-                                diagnostico.codigo_doc = Integer.valueOf(lista[2]);
-                                diagnostico.detalle = lista[3];
-                                diagnostico.modificar();
-                            new SMTP(sCorreo, "Diagnostico modificado correctamente", sMensaje);
-                            break;
-                        case"eliminar_diagnostico":
-                                lista = sMensaje.split(";");
-                                diagnostico.id_diag = Integer.valueOf(lista[0]);
-                                diagnostico.eliminar();
-                                new SMTP(sCorreo, "Diagnostico Eliminado Correctamente", sMensaje);
-                            break;
-                        case"listar_diagnostico":
-                                new SMTP(sCorreo, "Listado de diagnostico Correctamente", diagnostico.listar().toString());
-                            break;
-                        //-----------------------TRATAMIENTO--------------------
-                        case "registrar_tratamiento":
-                                lista=sMensaje.split(";");
-                                tratamiento.id_tra=Integer.valueOf(lista[0]);
-                                tratamiento.codigo_diag=Integer.valueOf(lista[1]);
-                                tratamiento.fecha_tra = lista[2];
-                                tratamiento.observacion = lista[3];
-                                tratamiento.proxima_cita = lista[4];
-                                tratamiento.registrar();
-                            new SMTP(sCorreo, "Tratamiento registrado correctamente", sMensaje);
-                            break;
-                        case "modificar_tratamiento":
-                                lista=sMensaje.split(";");
-                                tratamiento.id_tra=Integer.valueOf(lista[0]);
-                                tratamiento.codigo_diag=Integer.valueOf(lista[1]);
-                                tratamiento.fecha_tra = lista[2];
-                                tratamiento.observacion = lista[3];
-                                tratamiento.proxima_cita = lista[4];
-                                tratamiento.modificar();
-                            new SMTP(sCorreo, "Tratamiento modificado correctamente", sMensaje);
-                            break;
-                        case"eliminar_tratamiento":
-                                lista = sMensaje.split(";");
-                                tratamiento.id_tra = Integer.valueOf(lista[0]);
-                                tratamiento.eliminar();
-                                new SMTP(sCorreo, "Tratamiento Eliminado Correctamente", sMensaje);
-                            break;
-                        case"listar_tratamiento":
-                                new SMTP(sCorreo, "Listado de tratamiento Correctamente", tratamiento.listar().toString());
-                            break;    
-                        //-----------------------HISTORIAL----------------------
-                        case "registrar_historial":
-                                lista=sMensaje.split(";");
-                                historial.id_his=Integer.valueOf(lista[0]);
-                                historial.codigo_tra=Integer.valueOf(lista[1]);
-                                historial.fecha =lista[2];
-                                historial.registrar();
-                            new SMTP(sCorreo, "Historial registrado correctamente", sMensaje);
-                            break;
-                        case "modificar_historial":
-                                lista=sMensaje.split(";");
-                                historial.id_his=Integer.valueOf(lista[0]);
-                                historial.codigo_tra=Integer.valueOf(lista[1]);
-                                historial.fecha =lista[2];
-                                historial.modificar();
-                            new SMTP(sCorreo, "Historial modificado correctamente", sMensaje);
-                            break;
-                        case"eliminar_historial":
-                                lista = sMensaje.split(";");
-                                historial.id_his = Integer.valueOf(lista[0]);
-                                historial.eliminar();
-                                new SMTP(sCorreo, "Historial Eliminado Correctamente", sMensaje);
-                            break;
-                        case"listar_historial":
-                                new SMTP(sCorreo, "Listado de Historial Correctamente", historial.listar().toString());
-                            break;    
-                        //------------------------RECETA------------------------
-                        case "registrar_receta":
-                                lista=sMensaje.split(";");
-                                receta.id_rec=Integer.valueOf(lista[0]);
-                                receta.codigo_tra=Integer.valueOf(lista[1]);
-                                receta.detalle = lista[2];
-                                receta.registrar();
-                            new SMTP(sCorreo, "Receta registrada correctamente", sMensaje);
-                            break;
-                        case "modificar_receta":
-                                lista=sMensaje.split(";");
-                                receta.id_rec=Integer.valueOf(lista[0]);
-                                receta.codigo_tra=Integer.valueOf(lista[1]);
-                                receta.detalle = lista[2];
-                                receta.modificar();
-                            new SMTP(sCorreo, "Receta modificada correctamente", sMensaje);
-                            break;
-                        case"eliminar_receta":
-                                lista = sMensaje.split(";");
-                                receta.id_rec = Integer.valueOf(lista[0]);
-                                receta.eliminar();
-                                new SMTP(sCorreo, "Receta Eliminada Correctamente", sMensaje);
-                            break;
-                        case"listar_receta":
-                                new SMTP(sCorreo, "Lista de receta Correctamente", receta.listar().toString());
                             break;
                         //----------------------ESTADISTICAS-------------------- 
                             case"porcentaje_pacientes":

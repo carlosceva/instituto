@@ -18,13 +18,14 @@ public class Docente {
     public String email;
     public int telefono;
     public String especialidad;
+    public String estado;
         
     public Docente(){
     }
     
     public int registrar() {
-        String sql = "INSERT INTO docentes (id, nombre, email, telefono, especialidad) VALUES (?,?,?,?);";
-        return DBConection.getConexion().registrar("docentes", sql, id, nombre, email, telefono, especialidad);
+        String sql = "INSERT INTO docentes (id, nombre, email, telefono, especialidad, estado) VALUES (?,?,?,?,?,?);";
+        return DBConection.getConexion().registrar("docentes", sql, id, nombre, email, telefono, especialidad, estado);
     }
 
     public int eliminar() {
@@ -33,8 +34,8 @@ public class Docente {
     }
 
     public int modificar() {
-        String sql = "UPDATE docentes set id=?, nombre=?, email=?, telefono=?, especialidad=? WHERE id=?";
-        return DBConection.getConexion().modificar(sql, id, nombre, email, telefono, especialidad,id);
+        String sql = "UPDATE docentes set id=?, nombre=?, email=?, telefono=?, especialidad=?, estado=? WHERE id=?";
+        return DBConection.getConexion().modificar(sql, id, nombre, email, telefono, especialidad, estado, id);
     }
     
     public ArrayList<String> listar() {
@@ -43,7 +44,7 @@ public class Docente {
         try {
             ArrayList<String> lista = new ArrayList<>();
             while (rs.next()) {
-                String cadena = "ID: "+rs.getInt("id") + " Nombre: " + rs.getString("nombre") + " Email: " + rs.getString("email") + " Telefono: " + rs.getInt("telefono") + " Especialidad: " + rs.getInt("especialidad") + "\n";
+                String cadena = "ID: "+rs.getInt("id") + " Nombre: " + rs.getString("nombre") + " Email: " + rs.getString("email") + " Telefono: " + rs.getInt("telefono") + " Especialidad: " + rs.getString("especialidad")+ " Estado: " + rs.getString("estado") + "\n";
                 lista.add(cadena);
             }
             return lista;
