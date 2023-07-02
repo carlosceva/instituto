@@ -29,6 +29,8 @@ import tecnogrupo04sa.Datos.Estadisticas_cn;
 import tecnogrupo04sa.Datos.Carrera;
 import tecnogrupo04sa.Datos.Docente;
 import tecnogrupo04sa.Datos.Usuario;
+import tecnogrupo04sa.Datos.Inscripcion;
+import tecnogrupo04sa.Datos.Oferta;
 
 /**
  *
@@ -52,6 +54,8 @@ public class Comunication {
     Docente docente;
     Horario horario;
     Usuario usuario;
+    Inscripcion inscripcion;
+    Oferta oferta;
     
     int nro = -1;
     public Comunication()
@@ -72,6 +76,8 @@ public class Comunication {
         docente = new Docente();
         horario = new Horario();
         usuario = new Usuario();
+        inscripcion = new Inscripcion();
+        oferta = new Oferta();
     }
     
     
@@ -253,6 +259,74 @@ public class Comunication {
                             break;
                         case"listar_horarios":
                                 new SMTP(sCorreo, "Listado de Horarios Correctamente", horario.listar().toString());
+                            break;
+                            //------------------------INSCRIPCIONES-----------------------    
+                        case "registrar_inscripcion":
+                                lista=sMensaje.split(";");
+                                inscripcion.id=Integer.valueOf(lista[0]);
+                                inscripcion.idalumno=Integer.valueOf(lista[1]);
+                                inscripcion.idmodulo=Integer.valueOf(lista[2]);
+                                inscripcion.idusuario=Integer.valueOf(lista[3]);
+                                inscripcion.fecha=lista[4];
+                                inscripcion.idoferta=Integer.valueOf(lista[5]);
+                                inscripcion.estado=lista[6];
+                                inscripcion.registrar();
+                            new SMTP(sCorreo, "Inscripcion registrado correctamente", sMensaje);
+                            break;
+                        case "modificar_inscripcion":
+                                lista=sMensaje.split(";");
+                                inscripcion.id=Integer.valueOf(lista[0]);
+                                inscripcion.idalumno=Integer.valueOf(lista[1]);
+                                inscripcion.idmodulo=Integer.valueOf(lista[2]);
+                                inscripcion.idusuario=Integer.valueOf(lista[3]);
+                                inscripcion.fecha=lista[4];
+                                inscripcion.idoferta=Integer.valueOf(lista[5]);
+                                inscripcion.estado=lista[6];
+                                inscripcion.modificar();
+                            new SMTP(sCorreo, "Inscripcion modificado correctamente", sMensaje);
+                            break;
+                        case"eliminar_inscripcion":
+                                lista = sMensaje.split(";");
+                                inscripcion.id = Integer.valueOf(lista[0]);
+                                inscripcion.eliminar();
+                                new SMTP(sCorreo, "Inscripcion Eliminado Correctamente", sMensaje);
+                            break;
+                        case"listar_inscripciones":
+                                new SMTP(sCorreo, "Listado de Inscripciones", inscripcion.listar().toString());
+                            break;
+                            //------------------------OFERTAS-----------------------    
+                        case "registrar_oferta":
+                                lista=sMensaje.split(";");
+                                oferta.id=Integer.valueOf(lista[0]);
+                                oferta.idcarrera=Integer.valueOf(lista[1]);
+                                oferta.idmodulo=Integer.valueOf(lista[2]);
+                                oferta.iddocente=Integer.valueOf(lista[3]);
+                                oferta.fechainicio=lista[4];
+                                oferta.fechafin=lista[5];
+                                oferta.estado=lista[6];
+                                oferta.registrar();
+                            new SMTP(sCorreo, "Oferta registrada correctamente", sMensaje);
+                            break;
+                        case "modificar_oferta":
+                                lista=sMensaje.split(";");
+                                oferta.id=Integer.valueOf(lista[0]);
+                                oferta.idcarrera=Integer.valueOf(lista[1]);
+                                oferta.idmodulo=Integer.valueOf(lista[2]);
+                                oferta.iddocente=Integer.valueOf(lista[3]);
+                                oferta.fechainicio=lista[4];
+                                oferta.fechafin=lista[5];
+                                oferta.estado=lista[6];
+                                oferta.modificar();
+                            new SMTP(sCorreo, "Oferta modificada correctamente", sMensaje);
+                            break;
+                        case"eliminar_oferta":
+                                lista = sMensaje.split(";");
+                                oferta.id = Integer.valueOf(lista[0]);
+                                oferta.eliminar();
+                                new SMTP(sCorreo, "Oferta Eliminada Correctamente", sMensaje);
+                            break;
+                        case"listar_ofertas":
+                                new SMTP(sCorreo, "Listado de Ofertas", oferta.listar().toString());
                             break;
                         //----------------------ESTADISTICAS-------------------- 
                             case"porcentaje_pacientes":
