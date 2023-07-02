@@ -17,13 +17,13 @@ public class Carrera {
     public String nombrecarrera;
     public String siglacarrera;
     public int periodocarrera;
-    
+    public String estadocarrera;
     public Carrera(){
     }
     
     public int registrar() {
-        String sql = "INSERT INTO carreras (id, nombrecarrera, siglacarrera, periodocarrera) VALUES (?,?,?,?);";
-        return DBConection.getConexion().registrar("carreras", sql, id, nombrecarrera, siglacarrera, periodocarrera);
+        String sql = "INSERT INTO carreras (id, nombre, sigla, periodo,estado) VALUES (?,?,?,?,?);";
+        return DBConection.getConexion().registrar("carreras", sql, id, nombrecarrera, siglacarrera, periodocarrera,estadocarrera);
     }
 
     public int eliminar() {
@@ -32,8 +32,8 @@ public class Carrera {
     }
 
     public int modificar() {
-        String sql = "UPDATE carreras set id=?, nombrecarrera=?, siglacarrera=?, periodocarrera=? WHERE id=?";
-        return DBConection.getConexion().modificar(sql, id, nombrecarrera, siglacarrera, periodocarrera,id);
+        String sql = "UPDATE carreras set id=?, nombre=?, sigla=?, periodo=? , estado=? WHERE id=?";
+        return DBConection.getConexion().modificar(sql, id, nombrecarrera, siglacarrera, periodocarrera,estadocarrera,id);
     }
     
     public ArrayList<String> listar() {
@@ -42,7 +42,7 @@ public class Carrera {
         try {
             ArrayList<String> lista = new ArrayList<>();
             while (rs.next()) {
-                String cadena = "ID: "+rs.getInt("id") + " Nombre: " + rs.getString("nombrecarrera") + " Sigla: " + rs.getString("siglacarrera") + " Periodo: " + rs.getInt("periodocarrera") + "\n";
+                String cadena = "ID: "+rs.getInt("id") + " Nombre: " + rs.getString("nombre") + " Sigla: " + rs.getString("sigla") + " Periodo: " + rs.getInt("periodo") +  " estado: " + rs.getInt("estado") +"\n";
                 lista.add(cadena);
             }
             return lista;

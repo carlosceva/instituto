@@ -28,6 +28,7 @@ import tecnogrupo04sa.Datos.Estadisticas_cn;
 
 import tecnogrupo04sa.Datos.Carrera;
 import tecnogrupo04sa.Datos.Docente;
+import tecnogrupo04sa.Datos.Usuario;
 
 /**
  *
@@ -50,6 +51,7 @@ public class Comunication {
     
     Carrera carrera;
     Docente docente;
+    Usuario usuario;
     
     int nro = -1;
     public Comunication()
@@ -59,7 +61,6 @@ public class Comunication {
         doctor = new Doctor();
         especialidad = new Especialidad();
         servicio = new Servicio();
-        horario = new Horario();
         cita = new Cita();
         diagnostico = new Diagnostico();
         historial = new Historial();
@@ -69,6 +70,8 @@ public class Comunication {
         
         carrera = new Carrera();
         docente = new Docente();
+        horario = new Horario();
+        usuario = new Usuario();
     }
     
     
@@ -127,108 +130,36 @@ public class Comunication {
 		try {
                     String[] lista;
                     switch (split[0]) {
-                        //-----------------------PACIENTE-----------------------
-                        case"registrar_paciente":
+                        //-----------------------USUARIO-----------------------
+                        case"registrar_usuario":
                                 lista = sMensaje.split(";");
-                                paciente.ci = Integer.valueOf(lista[0]);
-                                paciente.nombre = lista[1];
-                                paciente.apellido = lista[2];
-                                paciente.sexo = lista[3];
-                                paciente.telefono = Integer.valueOf(lista[4]);
-                                paciente.direccion = lista[5];
-                                paciente.fecha_nac=lista[6];
-                                
-                                paciente.registrar();
-                                new SMTP(sCorreo, "Paciente Registrado Correctamente", sMensaje);
+                                usuario.id = Integer.valueOf(lista[0]);
+                                usuario.nombre = lista[1];
+                                usuario.email = lista[2];
+                                usuario.rol = lista[3];
+                                usuario.estado = lista[4];
+                                usuario.registrar();
+                                new SMTP(sCorreo, "Usuario Registrado Correctamente", sMensaje);
                             break;
-                        case"modificar_paciente":
+                        case"modificar_usuario":
                                 lista = sMensaje.split(";");
-                                paciente.ci = Integer.valueOf(lista[0]);
-                                paciente.nombre = lista[1];
-                                paciente.apellido = lista[2];
-                                paciente.sexo = lista[3];
-                                paciente.telefono = Integer.valueOf(lista[4]);
-                                paciente.direccion = lista[5];
-                                paciente.fecha_nac = lista[6];
-                                paciente.modificar();
-                                new SMTP(sCorreo, "Paciente Modificado Correctamente", sMensaje);
+                                usuario.id = Integer.valueOf(lista[0]);
+                                usuario.nombre = lista[1];
+                                usuario.email = lista[2];
+                                usuario.rol = lista[3];
+                                usuario.estado = lista[4];
+                                usuario.modificar();
+                                new SMTP(sCorreo, "Usuario modificado correctamente", sMensaje);
                             break;
-                        case"eliminar_paciente":
+                        case"eliminar_usuario":
                                 lista = sMensaje.split(";");
-                                paciente.ci = Integer.valueOf(lista[0]);
-                                paciente.eliminar();
-                                new SMTP(sCorreo, "Paciente Eliminado Correctamente", sMensaje);
+                                usuario.id = Integer.valueOf(lista[0]);
+                                usuario.eliminar();
+                                new SMTP(sCorreo, "Usuario Eliminado Correctamente", sMensaje);
                             break;
-                        case"listar_paciente":
-                                new SMTP(sCorreo, "Listado de Pacientes Correctamente", paciente.listar().toString());
+                        case"listar_usuarios":
+                                new SMTP(sCorreo, "Listado de usuarios", usuario.listar().toString());
                             break;
-                        //------------------------DOCTOR------------------------    
-                        case"registrar_doctor":
-                                lista = sMensaje.split(";");
-                                doctor.ci = Integer.valueOf(lista[0]);
-                                doctor.nombre = lista[1];
-                                doctor.apellida = lista[2];
-                                doctor.sexo = lista[3];
-                                doctor.telefono = Integer.valueOf(lista[4]);
-                                doctor.direccion = lista[5];
-                                doctor.fecha_nac=lista[6];
-                                doctor.codigo_esp=Integer.valueOf(lista[7]);
-                                doctor.registrar();
-                                new SMTP(sCorreo, "Doctor Registrado Correctamente", sMensaje);
-                            break;
-                        case"modificar_doctor":
-                                lista = sMensaje.split(";");
-                                doctor.ci = Integer.valueOf(lista[0]);
-                                doctor.nombre = lista[1];
-                                doctor.apellida = lista[2];
-                                doctor.sexo = lista[3];
-                                doctor.telefono = Integer.valueOf(lista[4]);
-                                doctor.direccion = lista[5];
-                                doctor.fecha_nac = lista[6];
-                                doctor.codigo_esp = Integer.valueOf(lista[7]);
-                                doctor.modificar();
-                                new SMTP(sCorreo, "Doctor Modificado Correctamente", sMensaje);
-                            break;
-                        case"eliminar_doctor":
-                                lista = sMensaje.split(";");
-                                doctor.ci = Integer.valueOf(lista[0]);
-                                doctor.eliminar();
-                                new SMTP(sCorreo, "Doctor Eliminado Correctamente", sMensaje);
-                            break;
-                        case"listar_doctor":
-                                new SMTP(sCorreo, "Listado de Doctores Correctamente", doctor.listar().toString());
-                            break;
-                        //-----------------------EMPLEADO-----------------------
-                        case"registrar_empleado":
-                                lista = sMensaje.split(";");
-                                empleado.id_emp = Integer.valueOf(lista[0]);
-                                empleado.nombre = lista[1];
-                                empleado.apellido = lista[2];
-                                empleado.telefono = Integer.valueOf(lista[3]);
-                                empleado.cargo = lista[4];
-                                
-                                empleado.registrar();
-                                new SMTP(sCorreo, "Empleado Registrado Correctamente", sMensaje);
-                            break;
-                        case"modificar_empleado":
-                                lista = sMensaje.split(";");
-                                empleado.id_emp = Integer.valueOf(lista[0]);
-                                empleado.nombre = lista[1];
-                                empleado.apellido = lista[2];
-                                empleado.telefono = Integer.valueOf(lista[3]);
-                                empleado.cargo = lista[4];
-                                empleado.modificar();
-                                new SMTP(sCorreo, "Empleado Modificado Correctamente", sMensaje);
-                            break;
-                        case"eliminar_empleado":
-                                lista = sMensaje.split(";");
-                                empleado.id_emp = Integer.valueOf(lista[0]);
-                                empleado.eliminar();
-                                new SMTP(sCorreo, "Empleado Eliminado Correctamente", sMensaje);
-                            break;
-                        case"listar_empleado":
-                                new SMTP(sCorreo, "Listado de Empleados enviado Correctamente", empleado.listar().toString());
-                            break;    
                             
                         //----------------------Carrera--------------------
                         case"registrar_carrera":
@@ -237,6 +168,7 @@ public class Comunication {
                                 carrera.nombrecarrera = lista[1];
                                 carrera.siglacarrera = lista[2];
                                 carrera.periodocarrera = Integer.valueOf(lista[3]);
+                                carrera.estadocarrera = lista[4];
                                 carrera.registrar();
                                 new SMTP(sCorreo, "Carrera registrada correctamente", sMensaje);
                             break;
@@ -246,12 +178,14 @@ public class Comunication {
                                 carrera.nombrecarrera = lista[1];
                                 carrera.siglacarrera = lista[2];
                                 carrera.periodocarrera = Integer.valueOf(lista[3]);
+                                carrera.estadocarrera = lista[4];
                                 carrera.modificar();
                                 new SMTP(sCorreo, "Carrera modificada correctamente", sMensaje);
                             break;
                         case"eliminar_carrera":
                                 lista = sMensaje.split(";");
                                 carrera.id = Integer.valueOf(lista[0]);
+                                System.out.println("El id a eliminar es el: " + carrera.id);
                                 carrera.eliminar();
                                 new SMTP(sCorreo, "Carrera Eliminada Correctamente", sMensaje);
                             break;
@@ -288,24 +222,30 @@ public class Comunication {
                         case"listar_docente":
                                 new SMTP(sCorreo, "Listado de docentes", docente.listar().toString());
                             break;
-                        //------------------------HORARIO-----------------------    
+                        //------------------------HORARIOS-----------------------    
                         case "registrar_horario":
                                 lista=sMensaje.split(";");
-                                horario.id_hora=Integer.valueOf(lista[0]);
-                                horario.hora=lista[1];
+                                horario.id=Integer.valueOf(lista[0]);
+                                horario.horainicio=lista[1];
+                                horario.horafin=lista[2];
+                                horario.turno=lista[3];
+                                horario.estado=lista[4];
                                 horario.registrar();
                             new SMTP(sCorreo, "Horario registrado correctamente", sMensaje);
                             break;
                         case "modificar_horario":
                                 lista=sMensaje.split(";");
-                                horario.id_hora=Integer.valueOf(lista[0]);
-                                horario.hora=lista[1];
+                                horario.id=Integer.valueOf(lista[0]);
+                                horario.horainicio=lista[1];
+                                horario.horafin=lista[2];
+                                horario.turno=lista[3];
+                                horario.estado=lista[4];
                                 horario.modificar();
                             new SMTP(sCorreo, "Horario modificado correctamente", sMensaje);
                             break;
                         case"eliminar_horario":
                                 lista = sMensaje.split(";");
-                                horario.id_hora = Integer.valueOf(lista[0]);
+                                horario.id = Integer.valueOf(lista[0]);
                                 horario.eliminar();
                                 new SMTP(sCorreo, "Horario Eliminado Correctamente", sMensaje);
                             break;
