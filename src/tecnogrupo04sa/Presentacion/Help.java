@@ -12,8 +12,13 @@ package tecnogrupo04sa.Presentacion;
 public class Help {
     public static final String UserSupport = "-----------Menu de Ayuda-----------"+ "\n"
 			+ " --------------USUARIOS-------------- "+ "\n"
+<<<<<<< HEAD
                         + "registrar_usuario"+ "\n"
                         + "ID;NOMBRE;EMAIL;ROL;ESTADO;" + "\n" 
+=======
+                        + "registrar_paciente"+ "\n"
+                        + "CI;NOMBRE;APELLIDO;SEXO;TELEFONO;DIRECCION;FECHA_NAC;" + "\n" 
+>>>>>>> 8e8d03039ff7821a42b6e4e7bd21edc83381fcc3
                         + "\n"
 			+ "modificar_usuario"+ "\n"
                         + "ID;NOMBRE;EMAIL;ROL;ESTADO;" + "\n" 
