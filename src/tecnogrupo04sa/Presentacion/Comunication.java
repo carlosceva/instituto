@@ -13,17 +13,8 @@ import javax.mail.BodyPart;
 import javax.mail.Flags;
 import javax.mail.Message;
 import javax.mail.Multipart;
-import tecnogrupo04sa.Datos.Cita;
-import tecnogrupo04sa.Datos.Diagnostico;
-import tecnogrupo04sa.Datos.Doctor;
-import tecnogrupo04sa.Datos.Empleado;
-import tecnogrupo04sa.Datos.Especialidad;
-import tecnogrupo04sa.Datos.Historial;
-import tecnogrupo04sa.Datos.Horario;
-import tecnogrupo04sa.Datos.Paciente;
-import tecnogrupo04sa.Datos.Receta;
-import tecnogrupo04sa.Datos.Servicio;
-import tecnogrupo04sa.Datos.Tratamiento;
+
+
 import tecnogrupo04sa.Datos.Estadisticas_cn;
 
 import tecnogrupo04sa.Datos.Carrera;
@@ -31,6 +22,11 @@ import tecnogrupo04sa.Datos.Docente;
 import tecnogrupo04sa.Datos.Usuario;
 import tecnogrupo04sa.Datos.Inscripcion;
 import tecnogrupo04sa.Datos.Oferta;
+import tecnogrupo04sa.Datos.Alumno;
+import tecnogrupo04sa.Datos.Nota;
+import tecnogrupo04sa.Datos.Modulo;
+import tecnogrupo04sa.Datos.Calendario;
+import tecnogrupo04sa.Datos.Horario;
 
 /**
  *
@@ -38,17 +34,8 @@ import tecnogrupo04sa.Datos.Oferta;
  */
 public class Comunication {
     List<Integer> ListMessageId;
-    Paciente paciente;
-    Doctor doctor;
-    Especialidad especialidad;
-    Servicio servicio;
-    Cita cita;
-    Diagnostico diagnostico;
-    Historial historial;
-    Receta receta;
-    Tratamiento tratamiento;
+
     Estadisticas_cn estadistica;
-    Empleado empleado;
     
     Carrera carrera;
     Docente docente;
@@ -56,21 +43,15 @@ public class Comunication {
     Usuario usuario;
     Inscripcion inscripcion;
     Oferta oferta;
+    Alumno alumno;
+    Nota nota;
+    Modulo modulo;
+    Calendario calendario;
     
     int nro = -1;
     public Comunication()
     {
         ListMessageId = new ArrayList<>();
-        paciente = new Paciente();
-        doctor = new Doctor();
-        especialidad = new Especialidad();
-        servicio = new Servicio();
-        cita = new Cita();
-        diagnostico = new Diagnostico();
-        historial = new Historial();
-        receta = new Receta();
-        tratamiento = new Tratamiento();
-        empleado = new Empleado();
         
         carrera = new Carrera();
         docente = new Docente();
@@ -78,6 +59,10 @@ public class Comunication {
         usuario = new Usuario();
         inscripcion = new Inscripcion();
         oferta = new Oferta();
+        alumno = new Alumno();
+        nota = new Nota();
+        modulo = new Modulo();
+        calendario = new Calendario();
     }
     
     
@@ -327,6 +312,138 @@ public class Comunication {
                             break;
                         case"listar_ofertas":
                                 new SMTP(sCorreo, "Listado de Ofertas", oferta.listar().toString());
+                            break;
+                            //-----------------------ALUMNO-----------------------    
+                        case"registrar_alumno":
+                                lista = sMensaje.split(";");
+                                System.out.println("suca gae");
+                                alumno.id = Integer.valueOf(lista[0]);
+                                alumno.nombre = lista[1];
+                                alumno.fechanac=lista[2];
+                                alumno.sexo = lista[3];
+                                alumno.email=lista[4];
+                                alumno.telefono=Integer.valueOf(lista[5]);
+                                alumno.idcarrera=Integer.valueOf(lista[6]);
+                                alumno.estado=lista[7];
+                                alumno.registrar();
+                                new SMTP(sCorreo, "Alumno registrado correctamente", sMensaje);
+                            break;
+                        case"modificar_alumno":
+                                lista = sMensaje.split(";");
+                               alumno.id = Integer.valueOf(lista[0]);
+                                alumno.nombre = lista[1];
+                                alumno.fechanac=lista[2];
+                                alumno.sexo = lista[3];
+                                alumno.email=lista[4];
+                                alumno.telefono=Integer.valueOf(lista[5]);
+                                alumno.idcarrera=Integer.valueOf(lista[6]);
+                                alumno.estado=lista[7];
+                                alumno.modificar();
+                                new SMTP(sCorreo, "Alumno modificado correctamente", sMensaje);
+                            break;
+                        case"eliminar_alumno":
+                                lista = sMensaje.split(";");
+                                alumno.id = Integer.valueOf(lista[0]);
+                                alumno.eliminar();
+                                new SMTP(sCorreo, "alumno Eliminado Correctamente", sMensaje);
+                            break;
+                        case"listar_alumnos":
+                                new SMTP(sCorreo, "Listado de alumnos", alumno.listar().toString());
+                            break;
+                        //-----------------------NOTA-----------------------    
+                        case"registrar_nota":
+                                lista = sMensaje.split(";");                               
+                                nota.id = Integer.valueOf(lista[0]);
+                                nota.idalumno = Integer.valueOf(lista[1]);
+                                nota.idmodulo=Integer.valueOf(lista[2]);
+                                nota.nota = Integer.valueOf(lista[3]);
+                                nota.fecha=lista[4];
+                                nota.estado=lista[5];
+                                nota.registrar();
+                                new SMTP(sCorreo, "Nota registrado correctamente", sMensaje);
+                            break;
+                        case"modificar_nota":
+                                lista = sMensaje.split(";");
+                                nota.id = Integer.valueOf(lista[0]);
+                                nota.idalumno = Integer.valueOf(lista[1]);
+                                nota.idmodulo=Integer.valueOf(lista[2]);
+                                nota.nota = Integer.valueOf(lista[3]);
+                                nota.fecha=lista[4];
+                                nota.estado=lista[5];
+                                nota.modificar();
+                                new SMTP(sCorreo, "Nota modificado correctamente", sMensaje);
+                            break;
+                        case"eliminar_nota":
+                                lista = sMensaje.split(";");
+                                nota.id = Integer.valueOf(lista[0]);
+                                nota.eliminar();
+                                new SMTP(sCorreo, "Nota Eliminado Correctamente", sMensaje);
+                            break;
+                        case"listar_nota":
+                                new SMTP(sCorreo, "Listado de Notas", nota.listar().toString());
+                            break;
+                            //-----------------------Modulos-----------------------    
+                        case"registrar_modulo":
+                                lista = sMensaje.split(";");
+                                modulo.id = Integer.valueOf(lista[0]);
+                                modulo.nombre = lista[1];
+                                modulo.sigla=lista[2];
+                                modulo.idcarrera = Integer.valueOf(lista[3]);
+                                modulo.idhorario=Integer.valueOf(lista[4]);
+                                modulo.estado=lista[5];
+                                modulo.registrar();
+                                new SMTP(sCorreo, "Modulo registrado correctamente", sMensaje);
+                            break;
+                        case"modificar_modulo":
+                                lista = sMensaje.split(";");
+                                modulo.id = Integer.valueOf(lista[0]);
+                                modulo.nombre = lista[1];
+                                modulo.sigla=lista[2];
+                                modulo.idcarrera = Integer.valueOf(lista[3]);
+                                modulo.idhorario=Integer.valueOf(lista[4]);
+                                modulo.estado=lista[5];
+                                modulo.modificar();
+                                new SMTP(sCorreo, "Modulo modificado correctamente", sMensaje);
+                            break;
+                        case"eliminar_modulo":
+                                lista = sMensaje.split(";");
+                                modulo.id = Integer.valueOf(lista[0]);
+                                modulo.eliminar();
+                                new SMTP(sCorreo, "Modulo Eliminado Correctamente", sMensaje);
+                            break;
+                        case"listar_modulos":
+                                new SMTP(sCorreo, "Listado de modulos", modulo.listar().toString());
+                            break;
+                            
+                               //-----------------------Calendario-----------------------    
+                        case"registrar_calendario":
+                                lista = sMensaje.split(";");
+                                calendario.id = Integer.valueOf(lista[0]);
+                                calendario.idusuario = Integer.valueOf(lista[1]);
+                                calendario.fecha=lista[2];
+                                calendario.descripcion = lista[3];
+                                calendario.estado=lista[4];
+                                calendario.registrar();
+                                new SMTP(sCorreo, "Calendario registrado correctamente", sMensaje);
+                            break;
+                        case"modificar_calendario":
+                                lista = sMensaje.split(";");
+                                calendario.id = Integer.valueOf(lista[0]);
+                                calendario.idusuario = Integer.valueOf(lista[1]);
+                                calendario.fecha=lista[2];
+                                calendario.descripcion = lista[3];
+                                calendario.estado=lista[4];
+                                calendario.modificar();
+                                new SMTP(sCorreo, "Calendario modificado correctamente", sMensaje);
+                            break;
+                        case"eliminar_calendario":
+                                lista = sMensaje.split(";");
+                                calendario.id = Integer.valueOf(lista[0]);
+                                calendario.eliminar();
+                                new SMTP(sCorreo, "Calendario Eliminado Correctamente", sMensaje);
+                            break;
+                        case"listar_calendario":
+                                new SMTP(sCorreo, "Listado de Calendarios", calendario.listar().toString());
                             break;
                         //----------------------ESTADISTICAS-------------------- 
                             case"porcentaje_pacientes":
